@@ -12,13 +12,14 @@ library(ggpubr)
 library(Cairo)
 library(reghelper)
 
-
-##### Differences in stim protocol and analysis
+#Clean working space
 rm(list=ls())
 
+##### Differences in stim protocol and analysis
 #Set Working directory
 setwd("/Users/Lukas/Documents/R/CHEPs_Ageing/2_Chep_Ageing/")
 
+#Load data
 dat2 <- read.csv("Single_Trial_Analysis2.csv", header=T, sep=',')
 
 NB <- dat2[which (dat2$Stim_Protocol=="Normal Baseline"),]
@@ -60,7 +61,6 @@ N2P2_NB_STA1 <- lmer(N2P2_Amplitude ~ Dermatome_new*Age +(1|ID), data=STA_NB)
 anova(N2P2_NB_STA1)
 summary(N2P2_NB_STA1)
 
-
 N2P2_NB_CV2 <- lmer(N2P2_Amplitude ~ Dermatome_new*NRS+(1|ID), data=CV_NB)
 anova(N2P2_NB_CV2)
 summary(N2P2_NB_CV2)
@@ -70,9 +70,6 @@ N2P2_NB_STA2 <- lmer(N2P2_Amplitude ~ Dermatome_new*NRS +(1|ID), data=STA_NB)
 anova(N2P2_NB_STA2)
 summary(N2P2_NB_STA2)
 
-
-
-
 ### Explore Pairwise Comparisons ### 
 N2P2_NB_em1 <- emmeans(N2P2_NB_Int, pairwise ~ Analysis|Dermatome_new, adjust="bonf")
 N2P2_NB_em2 <- emmeans(N2P2_NB_Int, pairwise ~ Dermatome_new|Analysis, adjust="bonf")
@@ -80,11 +77,6 @@ N2P2_NB_em3 <- emmeans(N2P2_NB_Int, pairwise ~ Dermatome_new, adjust="bonf")
 N2P2_NB_em1
 N2P2_NB_em2
 N2P2_NB_em3
-
-
-
-
-
 
 #########################
 ####### N2 Latency ###### 
@@ -103,7 +95,6 @@ anova(N2_NB_N)
 # N2_NB_FULL <- lmer(N2_Latency ~ Analysis*Dermatome_new+Age+Sex+Height+(Age*Analysis)+(Sex*Analysis)+(Height*Analysis)+ (1|ID), data=NB)
 # anova(N2_NB_FULL)
 
-
 ### Follow up ### 
 N2_NB_CV1 <- lmer(N2_Latency ~ Dermatome_new+Age+Sex+Height+ (1|ID), data=CV_NB)
 anova(N2_NB_CV1)
@@ -113,7 +104,6 @@ N2_NB_CV2 <- lmer(N2_Latency ~ relevel(Dermatome_new,"C8")+Age+Sex+Height+ (1|ID
 anova(N2_NB_CV2)
 summary(N2_NB_CV2)
 
-
 N2_NB_STA1 <- lmer(N2_Latency ~ Dermatome_new+Age+Sex+Height+ (1|ID), data=STA_NB)
 anova(N2_NB_STA1)
 summary(N2_NB_STA1)
@@ -122,13 +112,11 @@ N2_NB_STA2 <- lmer(N2_Latency ~ relevel(Dermatome_new,"C8")+Age+Sex+Height+ (1|I
 anova(N2_NB_STA2)
 summary(N2_NB_STA2)
 
-
 ### Explore pairwise comparisons ### 
 N2_NB_em1 <- emmeans(N2_NB_FULL, pairwise ~ Analysis|Dermatome_new, adjust="bonf")
 N2_NB_em2 <- emmeans(N2_NB_FULL, pairwise ~ Dermatome_new|Analysis, adjust="bonf")
 N2_NB_em1
 N2_NB_em2
-
 
 #### P2 Latency ### 
 P2_NB_Base <- lmer(P2_Latency ~ Analysis*Dermatome_new + (1|ID), data=NB)
@@ -146,12 +134,10 @@ anova(P2_NB_N)
 # P2_NB_FULL <- lmer(P2_Latency ~ Analysis*Dermatome_new+Age+Sex+Height+(Age*Analysis)+(Sex*Analysis)+(Height*Analysis)+ (1|ID), data=NB)
 # anova(P2_NB_FULL)
 
-
 ## Folow up 
 P2_NB_CV1 <- lmer(P2_Latency ~ Dermatome_new*Age+Sex+Height+ (1|ID), data=CV_NB)
 anova(P2_NB_CV1)
 summary(P2_NB_CV1)
-
 
 P2_NB_STA1 <- lmer(P2_Latency ~ Dermatome_new*Age+Sex+Height+ (1|ID), data=STA_NB)
 anova(P2_NB_STA1)
@@ -165,12 +151,6 @@ P2_NB_em1
 P2_NB_em2
 P2_NB_em3
 
-
-
-
-
-
-
 ### Cohen's D for N2 latency  #### 
 library(esc)
 
@@ -180,15 +160,10 @@ describeBy(NB$N2_Latency, list(NB$Analysis,NB$Dermatome))
 esc_mean_sd(grp1m = 401.3, grp1sd = 31.6, grp1n = 82,
             grp2m = 420.3, grp2sd = 53.8, grp2n = 75, es.type = "d")
 
-
-
-
-
 #### Boxplots #### 
 
 NB$Age_Group <- factor(NB$Age_Group,levels(NB$Age_Group)[c(3,2,1)])
 legend_title <-"Age:"
-
 
 #### N2P2 ## 
 f1 <- ggplot(data=NB, aes(x=interaction(Analysis, Dermatome_new),y=N2P2_Amplitude))+
@@ -213,12 +188,9 @@ f1 <- ggplot(data=NB, aes(x=interaction(Analysis, Dermatome_new),y=N2P2_Amplitud
         strip.text.x=element_text(family = "Times", size = 18))+
   scale_x_discrete(name="",labels=c("CV","STA","CV","STA","CV","STA"))+
   guides(fill=FALSE, shape=guide_legend(override.aes=list(size=4)))
-
-
 f1
 
 ggsave(f1, filename = "Figure1a_N2P2.pdf", device=cairo_pdf, width=6,height=5,units="in")
-
 
 ### N2 Latency ### 
 f3 <- ggplot(data=NB, aes(x=interaction(Analysis, Dermatome_new),y=N2_Latency))+
@@ -244,11 +216,8 @@ f3 <- ggplot(data=NB, aes(x=interaction(Analysis, Dermatome_new),y=N2_Latency))+
   scale_x_discrete(name="",labels=c("CV","STA","CV","STA","CV","STA"))+
   guides(fill=FALSE, shape=guide_legend(override.aes=list(size=4)))
 
-
 f3
-
 ggsave(f3, filename = "Figure1b_N2.pdf", device=cairo_pdf, width=6,height=5,units="in")
-
 
 ### P2 Latency ### 
 f5 <- ggplot(data=NB, aes(x=interaction(Analysis, Dermatome_new),y=P2_Latency))+
@@ -273,8 +242,6 @@ f5 <- ggplot(data=NB, aes(x=interaction(Analysis, Dermatome_new),y=P2_Latency))+
         strip.text.x=element_text(family = "Times", size = 18))+
   scale_x_discrete(name="",labels=c("CV","STA","CV","STA","CV","STA"))+
   guides(fill=FALSE, shape=guide_legend(override.aes=list(size=4)))
-
-
 f5
 
 ggsave(f5, filename = "Figure1c_P2.pdf", device=cairo_pdf, width=6,height=5,units="in")
