@@ -6,4 +6,4 @@ Laser and contact heat evoked potentials (LEPs and CHEPs, respectively) provide 
 
 ##### Funding: Swiss National Science Foundation (Ambizione Grant, PZ00P3_18610, Jutzeler), Natural Sciences and Engineering Research Council #####
 
-**Who should we contact?**: [Dr. Catherine Jutzeler](mailto:catherine.jutzeler@bsse.ethz.ch?subject=[GitHub]%20CHEPs%20STA%20Neuroimage_2020) or [Prof. John Kramer](mailto:kramer@icord.org?subject=[GitHub]%20Source%20Han%20Sans)
+**Who should we contact?**: [Dr. Catherine Jutzeler](mailto:catherine.jutzeler@bsse.ethz.ch?subject=GitHub:%Jutzeler%20et%20al%20Neuroimage_2020) or [Prof. John Kramer](mailto:kramer@icord.org?subject=GitHub:%Jutzeler%20et%20al%20Neuroimage_2020)
